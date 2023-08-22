@@ -1,7 +1,7 @@
-# TODO: Change the name of the org 
+# TODO: Change the name of the org
 org: thuantd8
-app: serverless-todo-app
-service: serverless-todo-app
+app: serverless-1
+service: serverless-1
 
 plugins:
   - serverless-webpack
@@ -12,8 +12,8 @@ plugins:
 
 provider:
   name: aws
-  runtime: nodejs12.x
-  #lambdaHashingVersion: '20201221'
+  runtime: nodejs14.x
+  # lambdaHashingVersion: '20201221'
 
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-1'}
@@ -22,12 +22,13 @@ provider:
     lambda: true
     apiGateway: true
 
-  # Use these variables in the functions and resouorces section below. For example, 
+  # Use these variables in the functions and resources section below. For example, 
   # ${self:provider.environment.ATTACHMENT_S3_BUCKET}
   environment:
+    PROJECT_NAME: Todo-App
     TODOS_TABLE: Todos-${self:provider.stage}
     TODOS_CREATED_AT_INDEX: CreatedAtIndex
-    ATTACHMENT_S3_BUCKET: thuantd8-serverless-c4-todo-images-${self:provider.stage}
+    ATTACHMENT_S3_BUCKET: thuantd8-serverless-c4-p4-${self:provider.stage}
     SIGNED_URL_EXPIRATION: 300
 
   logs:
@@ -89,23 +90,23 @@ functions:
     iamRoleStatements:
       - Effect: Allow
         Action:
-          - dynamodb: GetItem
-          - dynamodb: Query
+          - dynamodb:GetItem
+          - dynamodb:Query
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
       - Effect: Allow
         Action:
-          - xray: PutTraceSegments
-          - xray: PutTelemetryRecords
-        Resource:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource: 
           - '*'
 
 
+ 
 
   # TODO: Configure this function - 
   # Provide iamRoleStatements property. Decide the Actions and AWS Resource. 
   # To refer to an AWS resource defined in the "Resources" section, you can use "Resource: !GetAtt <resource-name>.Arn"
   # To validate incoming HTTP requests, we have provided the request schemas in function definition below. 
-
   CreateTodo:
     handler: src/lambda/http/createTodo.handler
     events:
@@ -185,7 +186,6 @@ functions:
         Resource: 
           - '*'
 
-
   # TODO: Configure this function
   # Provide property for setting up CORS, Authorizer, iamRoleStatements
   GenerateUploadUrl:
@@ -247,7 +247,8 @@ resources:
         RestApiId:
           Ref: ApiGatewayRestApi
         ValidateRequestBody: true
-        ValidateRequestParameters: false    
+        ValidateRequestParameters: false
+    
     # TODO: Create a DynamoDB table with local secondary index and a composite key
     TodosTable:
       Type: AWS::DynamoDB::Table

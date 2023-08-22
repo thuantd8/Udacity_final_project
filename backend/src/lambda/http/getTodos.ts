@@ -12,6 +12,7 @@ import { TodoItem } from '../../models/TodoItem'
 export const handler = middy(
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     // Write your code here
+    const userId: string = getUserId(event);
     const todos: TodoItem[] = await getTodosForUser(userId);
 
     return {
@@ -27,9 +28,7 @@ export const handler = middy(
   }
 )
 
-handler
-  .use(httpErrorHandler())
-  .use(
+handler.use(
     cors({
       credentials: true
     })

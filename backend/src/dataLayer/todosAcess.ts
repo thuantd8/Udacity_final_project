@@ -1,9 +1,9 @@
 import * as AWS from 'aws-sdk';
-import * as AWSXRay from 'aws-xray-sdk';
+//import * as AWSXRay from 'aws-xray-sdk';
 import { createLogger } from '../utils/logger';
 import { TodoItem } from '../models/TodoItem';
 import { TodoUpdate } from '../models/TodoUpdate';
-
+var AWSXRay = require ('aws-xray-sdk');
 // TODO: Implement the dataLayer logic
 const XAWS = AWSXRay.captureAWS(AWS);
 const docClient = new XAWS.DynamoDB.DocumentClient();
