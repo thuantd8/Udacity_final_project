@@ -1,3 +1,18 @@
+#New points have been developed based on Project 4:
+
+1. Enhance task management by creating additional features for each task, such as adding Due Date and priority for each task.
+![Alt text](images/Home.png?raw=true "Image 1")
+
+2. Once a task is finished, you can select it, then press the "Get todoDone" button to move the task to the completed list.
+![Alt text](images/todoDone.png?raw=true "Image 1")
+
+3. To identify which tasks are still working, simply click the "Get todo Working" button.
+![Alt text](images/todoWorking.png?raw=true "Image 1")
+
+
+
+
+
 # Serverless TODO
 
 To implement this project, you need to implement a simple TODO application using AWS Lambda and Serverless framework. Search for all comments starting with the `TODO:` in the code to find the placeholders that you need to implement.
@@ -289,3 +304,4 @@ Right click on the imported collection to set variables for the collection:
 Provide variables for the collection (similarly to how this was done in the course):
 
 ![Alt text](images/import-collection-5.png?raw=true "Image 5")
+# Udacity_final_project
