@@ -20,6 +20,7 @@ export async function createTodo(model: CreateTodoRequest, userId: string): Prom
     newItem.createdAt = new Date().toISOString();
     newItem.name = model.name;
     newItem.dueDate = model.dueDate;
+    newItem.priority = model.priority;
     newItem.done = false;
 
     return await todoAccess.createTodo(newItem);
@@ -35,6 +36,16 @@ export async function updateTodo(todoId: string, userId: string, model: UpdateTo
     logger.info(`Update todo id ${todoId}`)
 
     await todoAccess.updateTodo(todoId, userId, model);
+}
+
+export async function getTodosDone(userId: string): Promise<any> {
+    logger.info('Get list todo finished: ${userId}');
+    return await todoAccess.getTodosDone(userId);
+}
+
+export async function getTodosWorking(userId: string): Promise<any> {
+    logger.info('Get list todo not finished: ${userId}');
+    return await todoAccess.getTodosWorking(userId);
 }
 
 export async function deleteTodo(todoId: string, userId: string) {
@@ -54,14 +65,6 @@ export async function createAttachmentPresignedUrl(todoId: string, userId: strin
     return attachmentUrl;
 }
 
-export async function getTodosDone(userId: string): Promise<any> {
-    logger.info('Get list todo done');
-    return await todoAccess.getTodosDone(userId);
-}
 
-export async function getTodosNotDone(userId: string): Promise<any> {
-    logger.info('Get list todo not done');
-    return await todoAccess.getTodosNotDone(userId);
-}
 
 

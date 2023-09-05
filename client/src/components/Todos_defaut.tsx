@@ -122,7 +122,7 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
         todos: todos
       })
     } catch {
-      alert('TodoDone Task could not found')
+      alert('Todo Task could not found')
     }
   }
 
@@ -133,7 +133,7 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
         todos: todos
       })
     } catch {
-      alert('TodoWorking Not found')
+      alert('Todo Not found')
     }
   }
 

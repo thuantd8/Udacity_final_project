@@ -28,7 +28,7 @@ provider:
     PROJECT_NAME: Todo-App
     TODOS_TABLE: Todos-${self:provider.stage}
     TODOS_CREATED_AT_INDEX: CreatedAtIndex
-    ATTACHMENT_S3_BUCKET: thuantd8-serverless-c4-p4-${self:provider.stage}
+    ATTACHMENT_S3_BUCKET: thuantd8-serverless-c4-final-${self:provider.stage}
     SIGNED_URL_EXPIRATION: 300
 
   logs:
@@ -100,8 +100,48 @@ functions:
         Resource: 
           - '*'
 
-
- 
+  GetTodosDone:
+    handler: src/lambda/http/getTodosDone.handler
+    events:
+      - http:
+          method: get
+          path: todos/Done
+          cors: true
+          authorizer: Auth
+    iamRoleStatementsName: serverless-get-todo-Done-role-${self:provider.stage}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:GetItem
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource:
+          - '*'
+  GetTodosWorking:
+    handler: src/lambda/http/getTodosWorking.handler
+    events:
+      - http:
+          method: get
+          path: todos/Working
+          cors: true
+          authorizer: Auth
+    iamRoleStatementsName: serverless-get-todo-working-role-${self:provider.stage}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:GetItem
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource:
+          - '*' 
 
   # TODO: Configure this function - 
   # Provide iamRoleStatements property. Decide the Actions and AWS Resource. 

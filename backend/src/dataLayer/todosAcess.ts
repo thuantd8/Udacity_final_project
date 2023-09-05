@@ -78,7 +78,6 @@ export class TodosAccess {
 
         return await docClient.delete(params).promise();
     }
-
     async updateAttachmentForTodo(todoId: string, userId: string, attachmentUrl: string): Promise<TodoItem> {
         logger.debug('Update attachment');
 
@@ -99,9 +98,8 @@ export class TodosAccess {
 
         return result.Attributes as TodoItem;
     }
-
     async getTodosDone(userId: string): Promise<TodoItem[]> {
-        logger.debug('Getting all todos done');
+        logger.debug('Getting all todos finished');
 
         const params = {
             TableName: this.todosTable,
@@ -117,8 +115,8 @@ export class TodosAccess {
         return result.Items as TodoItem[];
     }
 
-    async getTodosNotDone(userId: string): Promise<TodoItem[]> {
-        logger.debug('Getting all todos not done');
+    async getTodosWorking(userId: string): Promise<TodoItem[]> {
+        logger.debug('Getting all todos not finished');
 
         const params = {
             TableName: this.todosTable,
@@ -133,5 +131,7 @@ export class TodosAccess {
         const result = await docClient.query(params).promise();
         return result.Items as TodoItem[];
     }
+
+  
 }
 
